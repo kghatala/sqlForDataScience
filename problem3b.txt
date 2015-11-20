@@ -1,0 +1,20 @@
+CREATE OR REPLACE VIEW WashTreas AS 
+SELECT *
+FROM frequency
+UNION
+SELECT 'q' as docid, 'washington' as term, 1 as count
+UNION
+SELECT 'q' as docid, 'taxes' as term, 1 as count
+UNION
+SELECT 'q' as docid, 'treasury' as term, 1 as count
+;
+
+SELECT MAX(x.value)
+FROM (
+	SELECT w.docid wid, f.docid fid, SUM(w.count*f.count) value	
+	FROM WashTreas w, frequency f
+	WHERE w.term = f.term
+	AND w.docid = 'q'
+	GROUP BY w.docid,f.docid
+) x;
+	

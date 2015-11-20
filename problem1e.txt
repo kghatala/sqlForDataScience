@@ -1,0 +1,8 @@
+SELECT count(*) FROM (
+
+	SELECT DISTINCT docid
+	FROM frequency
+	GROUP BY docid
+	HAVING count(*) > 300
+
+) x;
